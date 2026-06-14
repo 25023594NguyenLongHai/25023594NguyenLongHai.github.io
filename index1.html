@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Portfolio | Nguyễn Long Hải</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables & Reset - TÔNG MÀU TÍM TRẮNG CHỦ ĐẠO */
+        :root {
+            --sidebar-bg: #ffffff;       
+            --primary-purple: #7c3aed;   
+            --dark-purple: #4c1d95;      
+            --primary-gradient: linear-gradient(135deg, #a78bfa, #6b46c1); 
+            --text-dark: #1f2937;
+            --text-light: #4b5563;
+            --card-bg: #ffffff;
+            --bg-body: #f5f3ff;          
+            --border-color: #e9d8fd;     
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--bg-body);
+            color: var(--text-dark);
+        }
+
+        /* 1. THANH MENU BÊN TRÁI (SIDEBAR) */
+        aside {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-top .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        .sidebar-top .logo-area img {
+            height: 40px;
+            width: auto;
+        }
+
+        .sidebar-top .logo-area .logo-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--dark-purple);
+            line-height: 1.3;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 14px 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-menu li.active a, .sidebar-menu a:hover {
+            background-color: #f5f3ff;
+            color: var(--primary-purple);
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding-left: 10px;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        /* 2. KHU VỰC NỘI DUNG CHÍNH BÊN PHẢI */
+        main {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 30px;
+            scroll-behavior: smooth;
+        }
+
+        /* Banner Hero chứa thông tin cá nhân */
+        .hero-banner {
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .hero-info {
+            flex-grow: 1;
+        }
+
+        .hero-info .hero-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .hero-info h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-info p {
+            font-size: 0.95rem;
+            max-width: 650px;
+            opacity: 0.9;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .hero-tags {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tag-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* THAY ĐỔI: Phóng to khung ảnh chân dung to và rõ nét hơn */
+        .hero-avatar {
+            flex-shrink: 0;
+        }
+
+        .hero-avatar img {
+            width: 180px;         /* Tăng từ 120px lên 180px */
+            height: 180px;        /* Tăng từ 120px lên 180px */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-avatar img:hover {
+            transform: scale(1.05); /* Hiệu ứng zoom nhẹ khi di chuột vào ảnh */
+        }
+
+        /* Định dạng các khối nội dung Section */
+        section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--dark-purple);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .intro-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .info-block h3 {
+            color: var(--primary-purple);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .info-block p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        .hobbies-block {
+            background: #fdfbff; 
+            padding: 20px; 
+            border-radius: 12px; 
+            border-left: 4px solid var(--primary-purple);
+        }
+
+        /* Danh sách Dự án dạng lưới 2 cột */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .project-card {
+            background: #fdfbff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-card h4 {
+            color: var(--dark-purple);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .project-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            text-align: justify;
+            line-height: 1.5;
+        }
+
+        /* Accordion nhúng tài liệu PDF */
+        details {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        summary.btn-toggle {
+            display: block;
+            text-align: center;
+            background-color: var(--primary-purple);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            list-style: none;
+        }
+
+        summary.btn-toggle::-webkit-details-marker {
+            display: none;
+        }
+
+        summary.btn-toggle:hover {
+            background-color: var(--dark-purple);
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 500px;
+            margin-top: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        /* List icon tích chọn phần tổng kết */
+        .skills-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .skills-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        .skills-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-purple);
+            font-weight: bold;
+        }
+
+        /* Custom thanh cuộn */
+        main::-webkit-scrollbar {
+            width: 8px;
+        }
+        main::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        main::-webkit-scrollbar-thumb {
+            background: #d8b4fe;
+            border-radius: 4px;
+        }
+        main::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-purple);
+        }
+    </style>
+</head>
+<body>
+
+    <aside>
+        <div class="sidebar-top">
+            <div class="logo-area">
+                <img src="uet_logo.jpg" alt="Logo UET">
+                <div class="logo-text">ĐẠI HỌC CÔNG NGHỆ<br><span style="font-weight: 500; color: #78350f;">DHQGHN</span></div>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#trang-gioi-thieu">👤 Giới thiệu</a></li>
+                <li><a href="#danh-muc-du-an">💻 Danh mục dự án</a></li>
+                <li><a href="#tong-ket-suy-ngam">📝 Tổng kết & Suy ngẫm</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-footer">
+            <p>© 2026 Nguyễn Long Hải</p>
+            <p style="font-size: 0.75rem;">Digital Portfolio</p>
+        </div>
+    </aside>
+
+    <main>
+        
+        <div class="hero-banner">
+            <div class="hero-info">
+                <div class="hero-badge">DIGITAL PORTFOLIO</div>
+                <h1>Nguyễn Long Hải</h1>
+                <p>Sinh viên chuyên ngành Kỹ thuật Robot tài năng, đam mê tự động hóa hệ thống và nghiên cứu tích hợp trí tuệ nhân tạo thế hệ mới.</p>
+                
+                <div class="hero-tags">
+                    <div class="tag-item">🏛️ VNU-UET</div>
+                    <div class="tag-item">🤖 Kỹ thuật Robot ⚽</div>
+                </div>
+            </div>
+            <div class="hero-avatar">
+                <img src="profile.jpg" alt="Nguyễn Long Hải">
+            </div>
+        </div>
+
+        <section id="trang-gioi-thieu">
+            <div class="section-title">👤 Trang Giới thiệu</div>
+            
+            <div class="intro-columns">
+                <div class="info-block">
+                    <h3>Về bản thân</h3>
+                    <p style="margin-bottom: 15px;"><strong>Họ và tên:</strong> Nguyễn Long Hải</p>
+                    <p style="margin-bottom: 15px;"><strong>Chuyên ngành:</strong> Kỹ thuật Robot – Trường Đại học Công nghệ, ĐHQGHN (VNU-UET)</p>
+                    <p>Bản thân em là một sinh viên năng động, luôn cầu thị và khao khát chinh phục những đỉnh cao mới trong học tập và nghiên cứu. Em ý thức sâu sắc rằng sự chăm chỉ, kỷ luật và tư duy phản biện là chìa khóa để thành công trong kỷ nguyên số 4.0.</p>
+                </div>
+                
+                <div class="info-block hobbies-block">
+                    <h3>Sở thích & Đam mê</h3>
+                    <p style="margin-bottom: 12px;"><strong>Kỹ thuật & Công nghệ:</strong> Em say mê tìm tòi các hệ thống nhúng, lập trình vi điều khiển, và cách AI đang thay đổi ngành Robot hiện đại.</p>
+                    <p style="margin-bottom: 12px;"><strong>Thể thao:</strong> Em dành nhiều thời gian chơi thể thao để rèn luyện sức khỏe, sự bền bỉ và tinh thần đồng đội.</p>
+                    <p><strong>Đặc biệt là bóng đá:</strong> Môn thể thao vua là niềm đam mê lớn nhất, giúp em học được tính kỷ luật và khả năng phối hợp nhóm xuất sắc.</p>
+                </div>
+            </div>
+
+            <div class="intro-columns" style="margin-top: 30px;">
+                <div class="info-block" style="background: #fdfbff; padding: 20px; border-radius: 12px; border-left: 4px solid var(--primary-purple);">
+                    <h3>Mục tiêu & Định hướng</h3>
+                    <p style="margin-bottom: 12px;"><strong>Mục tiêu học tập:</strong> Phát huy tối đa lợi thế tiếp thu nhanh các công nghệ số hiện đại, hoàn thành xuất sắc các chuyên ngành và tham gia nghiên cứu robot ứng dụng.</p>
+                    <p><strong>Định hướng tương lai:</strong> Trở thành kỹ sư Robot có tư duy nhạy bén, biết lắng nghe, phối hợp tốt trong nhóm và có khả năng đưa ra các giải pháp đột phá.</p>
+                </div>
+                
+                <div class="info-block">
+                    <h3 style="color: var(--primary-purple);">Mục tiêu của Portfolio</h3>
+                    <p>Portfolio này được xây dựng không chỉ để đáp ứng yêu cầu của học phần, mà cao hơn cả, nó là minh chứng rõ nét cho một hành trình học tập đầy nghiêm túc và say mê. Đây là không gian lưu trữ các sản phẩm số cá nhân, thể hiện quá trình rèn luyện kỹ năng, tư duy hệ thống và khả năng làm chủ công nghệ. Qua đó, Portfolio giúp mình dễ dàng truy xuất, đánh giá sự tiến bộ của bản thân và tự tin chia sẻ năng lực với thầy cô cùng bạn bè.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="danh-muc-du-an">
+            <div class="section-title">💻 Danh mục dự án</div>
+            <p style="color: var(--text-light); margin-bottom: 25px; font-size: 0.95rem;">Tập hợp và trình bày các bài tập cá nhân đã hoàn thiện xuyên suốt học phần số hóa cơ bản:</p>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 1 - Bài 1: Máy tính và các thiết bị ngoại vi</h4>
+                        <p><strong>Mục tiêu:</strong> Nắm vững kiến trúc tổng thể của hệ thống máy tính, phân loại và hiểu rõ nguyên lý hoạt động của các thiết bị ngoại vi, từ đó tối ưu hóa việc thiết lập không gian làm việc số cá nhân.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Nghiên cứu tài liệu học thuật, tiến hành khảo sát và phân tích cấu hình phần cứng. Sau đó, hệ thống hóa kiến thức bằng sơ đồ tư duy kết hợp phân tích thực tiễn để lập báo cáo đánh giá chi tiết.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai1.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 2 - Bài 2: Khai thác dữ liệu và thông tin</h4>
+                        <p><strong>Mục tiêu:</strong> Làm chủ các kỹ năng tìm kiếm nâng cao (toán tử tìm kiếm, lọc dữ liệu), định vị và đánh giá độ tin cậy của các nguồn tài nguyên học thuật trực tuyến.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Ứng dụng các kỹ thuật truy vấn chuyên sâu trên Google Scholar, IEEE Xplore để thu thập tài liệu liên quan đến Kỹ thuật Robot. Phân tích, tổng hợp và sàng lọc thông tin rác để tạo ra một cơ sở dữ liệu học thuật cá nhân chuẩn xác.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai2.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 2 - Bài 3: Tổng quan về trí tuệ nhân tạo</h4>
+                        <p><strong>Mục tiêu:</strong> Hiểu rõ bản chất, các khái niệm nền tảng của AI, Machine Learning, Deep Learning và phân tích tiềm năng ứng dụng của AI trong tự động hóa và đời sống.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Đọc hiểu các báo cáo xu hướng công nghệ, phân tích case study về việc tích hợp AI vào Robot hiện đại. Biên soạn bài luận tổng quan sắc bén, có trích dẫn nguồn uy tín minh chứng cho luận điểm.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai3.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 3 - Bài 4: Giao tiếp và hợp tác trong môi trường số</h4>
+                        <p><strong>Mục tiêu:</strong> Ứng dụng thành thạo các công cụ điện toán đám mây và nền tảng giao tiếp trực tuyến để quản trị luồng công việc, tối ưu hóa hiệu suất làm việc nhóm.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Thiết lập không gian làm việc chia sẻ trên Google Workspace. Xây dựng quy trình trao đổi thông tin, phân chia tác vụ và đồng bộ hóa tiến độ dự án mô phỏng, ghi nhận lại toàn bộ quy trình qua báo cáo.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai4.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 2 - Bài 5: Sáng tạo nội dung số</h4>
+                        <p><strong>Mục tiêu:</strong> Phát triển tư lưu hình ảnh, kỹ năng chuyển đổi kiến thức thô thành các sản phẩm truyền thông số trực quan, thu hút.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Lên kịch bản ý tưởng, chắt lọc từ khóa quan trọng và sử dụng các công cụ thiết kế đồ họa để phác thảo, căn chỉnh bố cục màu sắc, xuất bản sản phẩm nội dung số hoàn chỉnh.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai5.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+
+                <div class="project-card">
+                    <div>
+                        <h4>Bài tập 4 - Bài 6: An toàn và liêm chính học thuật trong môi trường số</h4>
+                        <p><strong>Mục tiêu:</strong> Nhận thức sâu sắc về rủi ro an ninh mạng, bản quyền kỹ thuật số và các chuẩn mực đạo đức, liêm chính khi sử dụng AI và thông tin học thuật.</p>
+                        <p><strong>Quá trình thực hiện:</strong> Nghiên cứu bộ quy tắc liêm chính học thuật của trường, thiết lập các biện pháp bảo mật tài khoản cá nhân. Xây dựng một bài phân tích sâu sắc về tầm quan trọng của đạo đức số trong kỷ nguyên AI.</p>
+                    </div>
+                    <details>
+                        <summary class="btn-toggle">Xem/Ẩn sản phẩm (PDF)</summary>
+                        <iframe src="bai6.pdf" class="pdf-container"></iframe>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <section id="tong-ket-suy-ngam">
+            <div class="section-title">📝 Tổng kết & Suy ngẫm</div>
+            
+            <p style="font-size: 0.98rem; color: var(--text-light); text-align: justify; line-height: 1.6;">
+                Nhìn lại toàn bộ hành trình hoàn thiện Digital Portfolio này, bản thân em cảm thấy vô cùng tự hào. Đây không chỉ đơn thuần là việc hoàn thành một bài tập cuối kỳ, mà là một trải nghiệm rèn luyện thực tế mang tính bước ngoặt, giúp em chuyển hóa những lý thuyết trên giảng đường thành kỹ năng thực chiến. Sự đầu tư nghiêm túc vào từng bài tập đã giúp em định hình được tư duy làm việc chuyên nghiệp, logic và kỷ luật.
+            </p>
+
+            <h3 style="color: var(--primary-purple); font-size: 1.1rem; margin: 20px 0 10px 0;">Những kiến thức và kỹ năng quan trọng nhất đã học được:</h3>
+            <ul class="skills-list">
+                <li><strong>Tư duy quản trị hệ thống số:</strong> Biết cách sắp xếp, phân loại dữ liệu khoa học, tối ưu hóa việc quản lý và chia sẻ tệp tin trên môi trường đám mây.</li>
+                <li><strong>Kỹ năng nghiên cứu và khai thác thông tin:</strong> Khả năng tra cứu nâng cao, thẩm định độ tin cậy của tài liệu, tránh được các bẫy thông tin sai lệch trên Internet.</li>
+                <li><strong>Năng lực thích ứng công nghệ:</strong> Làm chủ các công cụ hỗ trợ công việc, từ thiết kế nội dung trực quan đến việc tương tác với AI (Prompt Engineering) một cách hiệu quả và có đạo đức.</li>
+                <li><strong>Tính tỉ mỉ và trách nhiệm:</strong> Hiểu sâu sắc về liêm chính học thuật, tôn trọng bản quyền, và ý thức tự bảo vệ thông tin cá nhân trên không gian mạng.</li>
+            </ul>
+
+            <div style="background: #fdfbff; padding: 20px; border-radius: 12px; margin-top: 20px; border: 1px solid var(--border-color);">
+                <h3 style="color: var(--dark-purple); font-size: 1.1rem; margin-bottom: 10px;">Những điểm cảm thấy tâm đắc nhất & Thách thức đã gặp phải</h3>
+                <p style="font-size: 0.95rem; color: var(--text-light); text-align: justify; line-height: 1.6; margin-bottom: 10px;">
+                    <strong>Điều em tâm đắc nhất:</strong> Là việc tự tay xây dựng được một không gian số đồng bộ, chỉn chu từ mặt thẩm mỹ đến công năng. Portfolio này phản ánh chính xác con người em: một sinh viên Kỹ thuật Robot yêu thích sự chính xác, logic nhưng cũng không kém phần sáng tạo, tinh tế.
+                </p>
+                <p style="font-size: 0.95rem; color: var(--text-light); text-align: justify; line-height: 1.6;">
+                    <strong>Thách thức gặp phải:</strong> Khó khăn lớn nhất trong quá trình làm bài là việc tổng hợp và cấu trúc hóa một khối lượng thông tin lớn, làm sao để thể hiện ngắn gọn nhưng vẫn đầy đủ chiều sâu của từng dự án. Thêm vào đó, việc căn chỉnh giao diện, sử dụng màu sắc sao cho hài hòa, chuyên nghiệp cũng đòi hỏi sự kiên nhẫn. Bằng sự quyết tâm, chủ động học hỏi và liên tục thử nghiệm, em đã khắc phục được những giới hạn đó, hoàn thành Portfolio với tiêu chuẩn cao nhất mà bản thân đặt ra.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLi = document.querySelectorAll('.sidebar-menu li');
+        const mainSpace = document.querySelector('main');
+        
+        mainSpace.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (mainSpace.scrollTop >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLi.forEach(li => {
+                li.classList.remove('active');
+                if (li.querySelector('a').getAttribute('href').substring(1) === current) {
+                    li.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
